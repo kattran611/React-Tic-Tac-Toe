@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Player from './components/choosePlayer';
+import Status from './components/Status';
 
 
 class App extends Component {
@@ -27,9 +27,14 @@ class App extends Component {
       ["2", "4", "6"]
     ]
 
+    this.checkMatch(winLines)
+  }
+
+  checkMatch(winLines) {
     for (let index = 0; index < winLines.length; index++) {
       const [a, b, c] = winLines[index];
-      if (this.state.board[a] && this.state.board[a] === this.state.board[b] && this.state.board[a] === this.state.board[c]) {
+      let board = this.state.board
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         alert('You won');
         this.setState({
           winner: this.state.player
@@ -38,6 +43,7 @@ class App extends Component {
 
     }
   }
+
 
   handleClick(index) {
 
@@ -59,21 +65,28 @@ class App extends Component {
     this.setState({player})
   }
 
-  render() {
-    const Box = this.state.board.map(
+  renderBoxes() {
+    return this.state.board.map(
       (box, index) =>
-      <div className="box"
-      key={index}
-      onClick={() => this.handleClick(index)}>
-      {box}
-      </div>
-    )
+        <div className="box" key={index}
+          onClick={() => this.handleClick(index)}>
+          {box}
+          </div>
+      )
+  }
+
+
+  render() {
     return (
       <div className="container">
         <h1> Tic Tac Toe</h1>
-        <Player player={(e) => this.setPlayer(e)} />
+          <Status
+            player={this.state.player}
+            setPlayer={(e) =>{this.setPlayer(e)}}
+            winner={this.state.winner}
+          />
         <div className="board">
-          {Box}
+          {this.renderBoxes()}
         </div>
       </div>
     );
