@@ -6,6 +6,7 @@ class Player extends Component{
 
   handleForm(e){
     e.preventDefault();
+    this.props.player(e.target.player.value)
   }
   render() {
     return (

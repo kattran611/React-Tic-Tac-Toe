@@ -8,7 +8,7 @@ class App extends Component {
     super(props)
     this.state = {
       board : Array(9).fill(null),
-      player : "X",
+      player : null,
       winner : null
     }
   }
@@ -41,16 +41,22 @@ class App extends Component {
 
   handleClick(index) {
 
-    let newBoard = this.state.board
-    if(this.state.board[index] === null && !this.state.winner) {
-      newBoard[index] = this.state.player
-      this.setState({
-        board: newBoard,
-        player : this.state.player === "X" ? "O" : "X"
-      })
+    if(this.state.player && !this.state.winner) {
+      let newBoard = this.state.board
+      if(this.state.board[index] === null && !this.state.winner) {
+        newBoard[index] = this.state.player
+        this.setState({
+          board: newBoard,
+          player : this.state.player === "X" ? "O" : "X"
+        })
 
-      this.checkWinner()
+        this.checkWinner()
+      }
     }
+  }
+
+  setPlayer(player) {
+    this.setState({player})
   }
 
   render() {
@@ -65,7 +71,7 @@ class App extends Component {
     return (
       <div className="container">
         <h1> Tic Tac Toe</h1>
-        <Player />
+        <Player player={(e) => this.setPlayer(e)} />
         <div className="board">
           {Box}
         </div>
