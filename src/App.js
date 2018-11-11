@@ -75,6 +75,13 @@ class App extends Component {
       )
   }
 
+  reset() {
+    this.setState({
+      player: null,
+      winner: null,
+      board : Array(9).fill(null)
+    })
+  }
 
   render() {
     return (
@@ -88,6 +95,7 @@ class App extends Component {
         <div className="board">
           {this.renderBoxes()}
         </div>
+        <button disabled={!this.state.winner} onClick={() => this.reset()}> Reset</button>
       </div>
     );
   }
